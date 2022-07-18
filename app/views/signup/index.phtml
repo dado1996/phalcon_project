@@ -1,0 +1,14 @@
+<h2>Sign Up Using This Form!</h2>
+
+<?php echo $this->tag->form("signup/register"); ?>
+    <p>
+        <label for="name">Name</label>
+        <?php echo $this->tag->textField('name'); ?>
+    </p>
+    <p>
+        <label for="email">E-mail</label>
+        <?php echo $this->tag->emailField('email'); ?>
+    </p>
+
+    <?php echo $this->tag->submitButton('Send'); ?>
+</form>
