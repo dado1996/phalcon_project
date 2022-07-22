@@ -4,6 +4,7 @@ use \Phalcon\Loader;
 use \Phalcon\DI\FactoryDefault;
 use \Phalcon\Mvc\View;
 use Phalcon\Url as UrlProvider;
+use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use \Phalcon\Mvc\Application;
 
 define('BASE_PATH', dirname(__DIR__));
@@ -29,6 +30,18 @@ $loader = new Loader();
         $url = new UrlProvider();
         $url->setBaseUri('/');
         return $url;
+    });
+
+    $di->set('db', function() {
+        return new DbAdapter(
+            [
+                'host' => 'localhost',
+                'port' => 3306,
+                'username' => 'root',
+                'password' => '12345',
+                'dbname' => 'testing'
+            ]
+        );
     });
     
     $app = new Application($di);
