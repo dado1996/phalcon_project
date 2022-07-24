@@ -69,7 +69,15 @@ $loader = new Loader();
     // Routing
     $di->set('router', function() {
         $router = new \Phalcon\Mvc\Router();
-        $router->add();
+        $router->add(
+            '/superhero/jump/:int',
+            [
+                'controller' => 'test',
+                'action' => 'jump',
+                'id' => 1,
+                'name' => 2
+            ]
+        );
         return $router;
     });
 
@@ -124,7 +132,6 @@ try {
     $response = $app->handle($_SERVER['REQUEST_URI']);
     $response->send();
 } catch (Exception $e) {
-    echo json_encode($e, JSON_PRETTY_PRINT, 24);
     echo $e->getMessage() . PHP_EOL;
     echo $e->getLine() . PHP_EOL;
 }
