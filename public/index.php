@@ -20,9 +20,20 @@ $loader = new Loader();
     $loader->register();
     
     $di = new FactoryDefault();
+
+    $di->set('view', function() {
+        $db = new \Phalcon\Db\Adapter\Pdo\Mysql([
+            'host' => 'localhost',
+            'username' => 'root',
+            'password' => '12345',
+            'dbname' => 'testing'
+        ]);
+        return $db;
+    });
+
     $di->set('view', function () {
         $view = new View();
-        $view->setViewsDir('../app/views/');
+        $view->setViewsDir('../app/views');
         return $view;
     });
     
