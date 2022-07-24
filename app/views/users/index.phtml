@@ -4,9 +4,11 @@
     <?= $single->id ?>
     <?= $single->email ?>
     
+    <?php print_r($single->getProject('id != 2')->toArray()); ?>
     <?php foreach($single->project as $p): ?>
         <?= $p->id ?>
         <?= $p->title ?>
+        <br />
     <?php endforeach; ?>
 <?php endif; ?>
 
@@ -15,4 +17,10 @@
 <?php foreach($all as $user): ?>
     <?= $user->id ?>
     <?= $user->email ?>
+    <br />
 <?php endforeach; ?>
+
+<?php
+    $first = $all->getFirst()->toArray();
+    echo $first['id'];
+?>

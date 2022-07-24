@@ -7,7 +7,7 @@ class BaseModel extends \Phalcon\Mvc\Model {
     public function initialize() {
 
         // Local field, referenced model, referenced field
-        $this->hasMany('id', 'project', 'user_id');
+        $this->hasMany('id', 'Project', 'user_id');
 
         $this->addBehavior(
             new SoftDelete(
