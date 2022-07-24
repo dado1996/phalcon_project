@@ -24,6 +24,23 @@ class UsersController extends \Phalcon\Mvc\Controller {
         }
     }
 
+    public function createAssocAction($id) {
+        $user = Users::findFirst($id);
+
+        if (!$user) {
+            die("User doesn't exists");
+        }
+
+        $project = new Project();
+        $project->user = $user;
+        $project->title = "El mejor";
+
+        $result = $project->save();
+        if (!$result) {
+            print_r($project->getMessages());
+        }
+    }
+
     public function updateAction($id) {
         $user = Users::findFirstById($id);
         if (!$user) {

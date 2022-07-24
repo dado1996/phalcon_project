@@ -10,6 +10,8 @@ use \Phalcon\Mvc\Application;
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 
+// Sessions
+
 // Autoloader
 $loader = new Loader();
     $loader->registerDirs([
@@ -35,6 +37,33 @@ $loader = new Loader();
         $view = new View();
         $view->setViewsDir('../app/views');
         return $view;
+    });
+
+    $di->setShared('session', function() {
+        $session = new \Phalcon\Session\Manager();
+        $files = new \Phalcon\Session\Adapter\Stream(
+            [
+                'savePath' => "C:\\tools\\nginx-1.23.0\\html\\test_php\\tmp"
+            ]
+        );
+        $session->setAdapter($files);
+        $session->start();
+
+        return $session;
+    });
+
+    $di->set('modelsMetadata', function() {
+        $serializerFactory = new \Phalcon\Storage\SerializerFactory();
+        $adapterFactory = new \Phalcon\Cache\AdapterFactory($serializerFactory);
+        $options = [
+            'lifetime' => 86400,
+            'prefix' => 'my-prefix'
+        ];
+
+        $metadata = new \Phalcon\Mvc\Model\MetaData\Apcu($adapterFactory, $options);
+        $metadata->setStrategy(new \Phalcon\Mvc\Model\MetaData\Strategy\Introspection());
+
+        return $metadata;
     });
     
     $di->set('url', function() {
