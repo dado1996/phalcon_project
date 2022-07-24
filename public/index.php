@@ -10,7 +10,6 @@ use \Phalcon\Mvc\Application;
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
 
-// Sessions
 
 // Autoloader
 $loader = new Loader();
@@ -22,8 +21,8 @@ $loader = new Loader();
     $loader->register();
     
     $di = new FactoryDefault();
-
-    $di->set('view', function() {
+    
+    $di->set('db', function() {
         $db = new \Phalcon\Db\Adapter\Pdo\Mysql([
             'host' => 'localhost',
             'username' => 'root',
@@ -32,11 +31,46 @@ $loader = new Loader();
         ]);
         return $db;
     });
+    
+    $di->setShared(
+        'voltService',
+        function(\Phalcon\Mvc\ViewBaseInterface $view) use ($di) {
+            $volt = new \Phalcon\Mvc\View\Engine\Volt($view, $di);
+            $volt->setOptions(
+                [
+                    'always' => true,
+                    'extension' => '.php',
+                    'separator' => '_',
+                    'stat' => true,
+                    'path' => "C:\\tools\\nginx-1.23.0\\html\\test_php\\tmp\\storage\\cache\\volt",
+                    'prefix' => '-prefix-'
+                    ]
+            );
 
+            return $volt;
+        }
+    );
+
+    // Sessions
     $di->set('view', function () {
         $view = new View();
         $view->setViewsDir('../app/views');
+        
+        //Register volt engine
+        $view->registerEngines(
+            [
+                '.volt' => 'voltService'
+            ]
+        );
+
         return $view;
+    });
+
+    // Routing
+    $di->set('router', function() {
+        $router = new \Phalcon\Mvc\Router();
+        $router->add();
+        return $router;
     });
 
     $di->setShared('session', function() {

@@ -14,4 +14,12 @@ class IndexController extends Controller {
     public function getSessionAction() {
         return $this->session->get('name');
     }
+
+    public function removeSessionAction() {
+        echo $this->session->remove('name');
+    }
+
+    public function destroySessionAction() {
+        $this->session->destroy();
+    }
 }

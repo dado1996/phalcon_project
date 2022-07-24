@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,composer,phalcon
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,composer,phalcon
 .env
+/tmp/
 
 ### Composer ###
 composer.phar

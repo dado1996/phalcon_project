@@ -24,6 +24,24 @@ class UsersController extends \Phalcon\Mvc\Controller {
         }
     }
 
+    public function loginAction() {
+
+        $data = $this->request->get();              // $_REQUEST
+        $query = $this->request->getQuery('demo');  // $_GET Requests
+        $request = $this->request->getPost();       // $_POST Requests
+        print_r($request);
+
+        $this->request->hasPost('username');
+        $this->request->hasQuery('city');
+
+        $this->request->isAjax();
+        $this->request->isSecureRequest();
+        $this->request->isPost();
+        $this->request->isGet();
+        $this->request->isPut();
+        $this->request->isDelete();
+    }
+
     public function createAssocAction($id) {
         $user = Users::findFirst($id);
 
