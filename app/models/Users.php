@@ -1,18 +1,18 @@
 <?php
 
-use Phalcon\Mvc\Model;
-
-class Users extends Model {
+class Users extends BaseModel {
     public $id;
     public $name;
     public $email;
     public $password;
 
-    public function initialize() {
-        $this->setSource('users');
+    public function beforeValidationOnCreate() {
+        if ($this->email == "test@test.com") {
+            die("This email is too common");
+        }
     }
 
-    public function getSource() {
-        return "users";
-    }
+    // public function getSource() {
+    //     return "users";
+    // }
 }

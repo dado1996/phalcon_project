@@ -2,7 +2,14 @@
 
 class UsersController extends \Phalcon\Mvc\Controller {
     public function indexAction() {
-
+        $this->view->setVars([
+            'single' => Users::findFirstById(1),
+            'all' => Users::find(
+                [
+                    'deleted IS NULL'
+                ]
+            )
+        ]);
     }
 
     public function createAction() {
@@ -10,7 +17,6 @@ class UsersController extends \Phalcon\Mvc\Controller {
         $user->name = 'Diego Delgado';
         $user->email = 'diegodelgado_96@hotmail.com';
         $user->password = '1234567890';
-        $user->created_at = date("Y-m-d H:i:s");
         $result = $user->save();
 
         if(!$result) {
@@ -18,7 +24,31 @@ class UsersController extends \Phalcon\Mvc\Controller {
         }
     }
 
-    public function updateAction() {
+    public function updateAction($id) {
+        $user = Users::findFirstById($id);
+        if (!$user) {
+            echo "User does not exists";
+            die();
+        }
 
+        $user->email = "nuevo@email.com";
+        $result = $user->update();
+
+        if (!$result) {
+            print_r($user->getMessages());
+        }
+    }
+
+    public function deleteAction($id) {
+        $user = Users::findFirstById($id);
+        if (!$user) {
+            echo "User not found";
+            die();
+        }
+
+        $result = $user->delete();
+        if (!$result) {
+            print_r($user->getMessages());
+        }
     }
 }
