@@ -16,6 +16,7 @@ $loader = new Loader();
     $loader->registerDirs([
         APP_PATH . '/controllers',
         APP_PATH . '/models',
+        APP_PATH . '/config',
     ]);
     
     $loader->register();
@@ -69,15 +70,7 @@ $loader = new Loader();
     // Routing
     $di->set('router', function() {
         $router = new \Phalcon\Mvc\Router();
-        $router->add(
-            '/superhero/jump/:int',
-            [
-                'controller' => 'test',
-                'action' => 'jump',
-                'id' => 1,
-                'name' => 2
-            ]
-        );
+        $router->mount(new Routes());
         return $router;
     });
 

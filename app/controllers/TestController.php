@@ -2,13 +2,12 @@
 
 class TestController extends BaseController {
 
-    public function jumpAction($id, $name) {
+    public function jumpAction() {
         echo __FUNCTION__;
-        echo $id;
-        echo $name;
     }
 
-    public function flyAction() {
+    public function flyAction($id, $name = '') {
         echo __FUNCTION__;
+        echo $id;
     }
 }
