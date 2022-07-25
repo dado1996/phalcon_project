@@ -1,6 +1,7 @@
 <?php
 
-class UsersController extends \Phalcon\Mvc\Controller {
+class UsersController extends BaseController {
+
     public function indexAction() {
         $this->view->setVars([
             'single' => Users::findFirstById(1),

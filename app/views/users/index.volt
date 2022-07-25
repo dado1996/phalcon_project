@@ -1,5 +1,7 @@
 <h1>User</h1>
 
+{{ assets.outputCss() }}
+
 {{ form('users/login') }}
     {{ text_field('username') }}
     {{ password_field('password') }}

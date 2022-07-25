@@ -1,12 +1,7 @@
 <?php
-
-use \Phalcon\Mvc\Controller;
-
-class IndexController extends Controller {
+class IndexController extends BaseController {
     public function indexAction() {
         $this->view->users = Users::find();
-        $this->assets->addCss('assets/css/styles.css');
-        $this->assets->addJs('assets/js/scripts.js');
     }
 
     public function startSessionAction() {
