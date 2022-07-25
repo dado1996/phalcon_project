@@ -5,6 +5,8 @@ use \Phalcon\Mvc\Controller;
 class IndexController extends Controller {
     public function indexAction() {
         $this->view->users = Users::find();
+        $this->assets->addCss('assets/css/styles.css');
+        $this->assets->addJs('assets/js/scripts.js');
     }
 
     public function startSessionAction() {
